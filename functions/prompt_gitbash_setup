@@ -1,0 +1,84 @@
+# gitbash prompt theme
+
+prompt_gitbash_help () {
+    cat <<'EOF'
+Emulate git bash's default theme.
+
+You can invoke it like this:
+
+    prompt gitbash
+
+Annoyed that MINGW64 that always appears in the prompt? You can change it:
+
+    prompt gitbash "Your message here"
+
+Technically, MINGW64 appears there because it's the $MSYSTEM environment
+variable, which is related to the uname, so for an authentic experience, do
+the following:
+
+    prompt gitbash "$(uname)"
+
+EOF
+}
+
+prompt_gitbash_setup () {
+    # Dependencies
+    autoload -Uz vcs_info
+    autoload -Uz add-zsh-hook
+
+    # For some bizarre reason, the git bash prompt always shows $MSYSTEM
+    # which is a Mingw environment variable related to the uname.
+    # See: https://stackoverflow.com/a/32912485
+    prompt_gitbash_title="${1:-MINGW64}"
+
+    PROMPT="$(prompt_gitbash_lprompt)"
+    unset RPS1 RPS2 RPROMPT RPROMPT2
+    prompt_opts=( cr percent sp )
+
+    # Configure vcs_info
+    zstyle ':vcs_info:*' enable git
+    zstyle ':vcs_info:git:*' formats '%b'
+    add-zsh-hook precmd prompt_gitbash_precmd
+}
+
+prompt_gitbash_lprompt () {
+    # I used this as a guide:
+    # https://github.com/git-for-windows/git-sdk-64/blob/6d22b41ecd45d2ea9954d7aa68d6f27fb10a98cc/etc/profile.d/git-prompt.sh
+
+    echo -en "\033];%d\007"             # Put current working dir in the title
+    print                               # new line
+    print -n '%F{green}'
+    print -n '%n@%m '                   # user@hostanem
+    print -n '%F{magenta}'
+    print -n "${prompt_gitbash_title} " # show MSYSTEM... for some reason?
+    print -n '%F{yellow}'
+    print -n '%~'                       # current working directory
+
+    # Git Branch
+    print -n '%(1v.'
+    print -n ' %F{cyan}(%1v)'
+    print -n '.)'
+
+    print '%f'                          # New line and reset colors
+
+    print -n '$ '                       # prompt: always $
+}
+
+prompt_gitbash_preview () {
+    print "gitbash theme:"
+    # Pretend we're in a git repository:
+    psvar=(main)
+    print -Pn "$(prompt_gitbash_lprompt) command arg1 arg2 ... argn"
+}
+
+prompt_gitbash_precmd () {
+    # Runs vcs_info before the prompt is rendered, then place the branch into
+    # psvar. Then, in prompts:
+    #  %1v -- current branch
+    psvar=()
+    vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+prompt_gitbash_setup "$@"
+# vim: set ft=zsh:
