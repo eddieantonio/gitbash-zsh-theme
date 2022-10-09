@@ -8,17 +8,17 @@ A zsh prompt theme that mimics the default prompt from [Git for Windows][gitwind
 
 # Quick setup
 
-1. Clone this repo somewhere, for example `~/repos/prompt_gitbash`.
+1. Clone this repo somewhere, for example `~/repos/gitbash-zsh-theme`.
 2. Add the following to your `~/.zshrc`:
 
 ```zsh
-fpath=(~/repos/prompt_gitbash/functions $fpath)
+fpath=(~/repos/gitbash-zsh-theme/functions $fpath)
 autoload -U promptinit
 promptinit
 prompt gitbash
 ```
 
-Replace `~/repos/prompt_gitbash` with wherever you cloned this repo.
+Replace `~/repos/gitbash-zsh-theme` with wherever you cloned this repo.
 
 # Customization
 
