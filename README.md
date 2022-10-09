@@ -30,7 +30,7 @@ allows customizes this string:
 prompt gitbash 'Your string here!'
 ```
 
-# Full installation instructions
+# Full installation instructions
 
 This prompt is built using zsh's awesome [prompt theme system][prompt].
 There's a few things that the prompt theme system needs:
@@ -77,7 +77,7 @@ prompt restore
 [prompt]: https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Prompt-Themes
 [fpath]: https://zsh.sourceforge.io/Doc/Release/Functions.html#index-autoloading-functions
 
-# Inspiration
+# Inspiration
 
 I used the file from the Git for Windows installation, namely, [git-prompt.sh].
 
