@@ -82,3 +82,7 @@ prompt restore
 I used the file from the Git for Windows installation, namely, [git-prompt.sh].
 
 [git-prompt.sh]: https://github.com/git-for-windows/git-sdk-64/blob/main/etc/profile.d/git-prompt.sh
+
+# License
+
+© 2022 Eddie Antonio Santos. MIT licensed.
